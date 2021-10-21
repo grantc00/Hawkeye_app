@@ -15,7 +15,7 @@ class Stock(db.Model):
 
     assets = db.relationship('Asset', back_populates='stocks')
     watchlists = db.relationship('Watchlist', back_populates='stocks')
-    
+
 
 
     def to_dict(self):
@@ -24,7 +24,6 @@ class Stock(db.Model):
             "name": self.name,
             "ticker": self.ticker,
             "price": self.price,
-            "buying_power": self.buying_power,
             "about": self.about,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
