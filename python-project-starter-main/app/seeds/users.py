@@ -8,7 +8,7 @@ def seed_users():
     marnie = User(
         first_name='Marnie', last_name='Aldous',buying_power='2000000', email='marnie@aa.io', password='password')
     bobbie = User(
-        first_name='Bobbie', last_name='Woods', email='bobbie@aa.io', password='password')
+        first_name='Bobbie', last_name='Woods',buying_power='3000000', email='bobbie@aa.io', password='password')
 
     db.session.add(demo)
     db.session.add(marnie)
