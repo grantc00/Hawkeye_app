@@ -9,7 +9,7 @@ watchlist_routes = Blueprint("watchlists", __name__)
 
 # get all watchlist
 @watchlist_routes.route("/")
-@login_required
+# @login_required
 def get_watchlist():
     userId = current_user.id
     watchlists = Watchlist.query.filter(Watchlist.user_id == userId).all()
