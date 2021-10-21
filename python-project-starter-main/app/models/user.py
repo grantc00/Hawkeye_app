@@ -15,7 +15,9 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
-    Assets = db.relationship("Asset", back_populates="transaction_details")
+
+    assets = db.relationship("Asset", back_populates='users')
+    watchlists = db.relationship('Watchlist', back_populates='users')
 
     @property
     def password(self):

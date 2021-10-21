@@ -12,8 +12,10 @@ class Stock(db.Model):
     about = db.Column(db.String(1200), nullable=False)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
-    assets = db.relationship('Asset', backref='assetRef')
-    watchlist = db.relationship('Watchlist', backref='watchlistRef')
+
+    assets = db.relationship('Asset', back_populates='stocks')
+    watchlists = db.relationship('Watchlist', back_populates='stocks')
+    
 
 
     def to_dict(self):

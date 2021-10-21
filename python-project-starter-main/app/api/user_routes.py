@@ -70,7 +70,7 @@ def get_watchlist(id):
 
 
 # Post watchlist of user
-@user_routes.route("/<int:id>/watchlist")
+@user_routes.route("/<int:id>/watchlist", methods=['POST'])
 @login_required
 def post_watchlist(id):
     body = request.json

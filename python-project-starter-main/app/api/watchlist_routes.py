@@ -18,7 +18,7 @@ def get_watchlist():
 
 
 # create watchlist for user
-@watchlist_routes.route("/", method=["POST"])
+@watchlist_routes.route("/", methods=["POST"])
 @login_required
 def create_watchlist(id):
     form = WatchlistForm
@@ -35,7 +35,7 @@ def create_watchlist(id):
 
 
 # edit watchlist for user
-@watchlist_routes.route("/", method=["PATCH"])
+@watchlist_routes.route("/", methods=["PATCH"])
 @login_required
 def edit_watchlist(id):
     body = request.json()
@@ -48,7 +48,7 @@ def edit_watchlist(id):
 
 
 # delete watchlist for user
-@watchlist_routes.route("/", method=["DELETE"])
+@watchlist_routes.route("/", methods=["DELETE"])
 @login_required
 def delete_watchlist(id):
     watchlist = Watchlist.query.get(id)
