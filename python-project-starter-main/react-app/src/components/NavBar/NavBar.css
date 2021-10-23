@@ -1,0 +1,35 @@
+nav {
+    background-color: rgb(255, 255, 255);
+    height: 64px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+  }
+
+  nav img {
+    height: 35px;
+    width: 142px;
+  }
+
+  .nav-right ul,
+  a {
+    list-style: none;
+    text-decoration: none;
+    color: black;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-right-ul {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .nav-right-ul li {
+    padding: 5px;
+  }
+
+  .nav-search-bar {
+  }

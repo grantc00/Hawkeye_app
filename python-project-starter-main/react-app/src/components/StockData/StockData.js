@@ -9,8 +9,19 @@ import {
   ReferenceLine,
 } from "recharts";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getOneAsset,
+  getAllAssets,
+  addAsset,
+  editAsset,
+  deleteAsset,
+} from "../../store/asset";
 
 const StockData = () => {
+  const dispatch = useDispatch();
+  // const userId = useSelector((state) => state.session.user.id);
+  const ticker = useSelector((state) => state.session.ticker);
   const [myArray, setMyArray] = useState();
   const [openPrice, setOpenPrice] = useState();
   const [currentPrice, setCurrentPrice] = useState();
@@ -18,6 +29,9 @@ const StockData = () => {
   const [cost, setCost] = useState();
   const [buyOrSell, setBuyOrSell] = useState("buy");
   let StockSymbol = "COIN";
+  const stockId = 1;
+  const user = useSelector((state) => state.session.user);
+  console.log(user);
 
   useEffect(() => {
     setCost(shares * currentPrice);
@@ -28,6 +42,8 @@ const StockData = () => {
   Using sandbox token. NEED to use production token before deploy
   *
   */
+  // ========================================== Submission Functions
+
   let API_Call = `https://sandbox.iexapis.com/stable/stock/${StockSymbol}/intraday-prices?token=${process.env.REACT_APP_API_KEY}`;
 
   React.useEffect(() => {
@@ -55,15 +71,31 @@ const StockData = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("shares", shares);
-    console.log("cost", cost);
+
+    const form = {
+      // userId,
+      stockId,
+      shares,
+      cost,
+    };
     if (buyOrSell === "buy") {
-      console.log("buy button clicked");
+      dispatch(addAsset(form));
     } else if (buyOrSell === "sell") {
       console.log("sell button clicked");
     }
   };
 
+  //  const handleSubmit = () => {
+  //   const form = {
+  //     user_id: userId,
+  //     ticker: ticker,
+  //     shares,
+  //     cost
+  //   }
+  //   dispatch(addAsset(form))
+  //  }
+
+  // ========================================== COMPONENT
   return (
     <div className="main_container">
       <div className="row">
