@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request, session, redirect
 from flask_cors import CORS
 from flask_migrate import Migrate
+migrate = Migrate(compare_type=True)
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
 
@@ -18,7 +19,7 @@ from .seeds import seed_commands
 from .config import Config
 
 app = Flask(__name__)
-
+migrate.init_app(app)
 # Setup login manager
 login = LoginManager(app)
 login.login_view = "auth.unauthorized"
