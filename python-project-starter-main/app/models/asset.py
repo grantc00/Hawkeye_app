@@ -24,7 +24,7 @@ class Asset(db.Model):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "stock_id": self.stock_id,
+            # "stock_id": self.stock_id,
             "ticker": self.ticker,
             "cost": self.cost,
             "shares": self.shares,

@@ -44,11 +44,11 @@ export const getAllAssets = () => async (dispatch) => {
 
 // Add asset
 export const addAsset = (form) => async (dispatch) => {
-  const { userId, stockId, shares, cost } = form;
+  const { userId, ticker, shares, cost } = form;
 
   const formData = new FormData();
   formData.append("userId", userId);
-  formData.append("stockId", stockId);
+  formData.append("ticker", ticker);
   formData.append("shares", shares);
   formData.append("cost", cost);
   // if (userId) formData.append('userId', userId)

@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import User, db, Watchlist, Asset
-from app.forms import ProfileEditForm
+from app.forms import ProfileEditForm, BuyingPowerEditForm
 
 
 user_routes = Blueprint("users", __name__)
@@ -52,12 +52,16 @@ def get_user_buying_power(buying_power):
 @user_routes.route("/<int:id>/buying_power", methods=["PATCH"])
 @login_required
 def edit_buying_power_user(id):
-    body = request.json
-    user = User.query.get(id)
-    user.body_power = body
-    db.session.commit()
+    form = BuyingPowerEditForm()
 
-    return body.to_dict()
+    # form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if current_user and form.validate_on_submit():
+        # user_id = (current_user.get_id(),)
+        user.buying_power = form.buying_power.data
+        db.session.commit()
+
+    return user.to_dict()
 
 
 # Get watchlist of user
@@ -70,7 +74,7 @@ def get_watchlist(id):
 
 
 # Post watchlist of user
-@user_routes.route("/<int:id>/watchlist", methods=['POST'])
+@user_routes.route("/<int:id>/watchlist", methods=["POST"])
 @login_required
 def post_watchlist(id):
     body = request.json

@@ -13,8 +13,8 @@ class Stock(db.Model):
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
 
-    assets = db.relationship('Asset', back_populates='stocks')
-    watchlists = db.relationship('Watchlist', back_populates='stocks')
+    # assets = db.relationship('Asset', back_populates='stocks')
+    # watchlists = db.relationship('Watchlist', back_populates='stocks')
 
 
 
