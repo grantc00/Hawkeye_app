@@ -10,18 +10,13 @@ import {
 } from "recharts";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getOneAsset,
-  getAllAssets,
-  addAsset,
-  editAsset,
-  deleteAsset,
-} from "../../store/asset";
+import { addAsset, editAsset, deleteAsset } from "../../store/asset";
+import { editBuyingPower } from "../../store/user";
 
 const StockData = () => {
   const dispatch = useDispatch();
   // const userId = useSelector((state) => state.session.user.id);
-  const ticker = useSelector((state) => state.session.ticker);
+  const buyingPower = useSelector((state) => state.session.user.buying_power);
   const [myArray, setMyArray] = useState();
   const [openPrice, setOpenPrice] = useState();
   const [currentPrice, setCurrentPrice] = useState();
@@ -29,10 +24,9 @@ const StockData = () => {
   const [cost, setCost] = useState();
   const [buyOrSell, setBuyOrSell] = useState("buy");
   let StockSymbol = "COIN";
-  const stockId = 1;
   const user = useSelector((state) => state.session.user);
-  console.log(user);
-
+  const userId = user.id;
+  const ticker = "COIN";
   useEffect(() => {
     setCost(shares * currentPrice);
   }, [shares]);
@@ -71,15 +65,26 @@ const StockData = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    console.log(ticker);
     const form = {
-      // userId,
-      stockId,
+      userId,
+      ticker,
       shares,
       cost,
     };
     if (buyOrSell === "buy") {
-      dispatch(addAsset(form));
+      if (cost < buyingPower) {
+        const buying_power = buyingPower - cost;
+        const buyingPowerForm = {
+          userId,
+          buying_power,
+        };
+        dispatch(addAsset(form)).then(() => {
+          // dispatch(editBuyingPower(buyingPowerForm));
+        });
+      } else {
+        console.log("You need more $_$");
+      }
     } else if (buyOrSell === "sell") {
       console.log("sell button clicked");
     }
@@ -205,7 +210,7 @@ const StockData = () => {
               )}
 
               <footer className="trade_stock_footer">
-                <label>0 buying power availabe</label>
+                <label>${buyingPower} buying power availabe</label>
               </footer>
             </div>
           </form>

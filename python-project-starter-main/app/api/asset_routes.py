@@ -25,17 +25,11 @@ def get_asset(id):
 @asset_routes.route("/new-asset", methods=["POST"])
 @login_required
 def post_asset():
-    # body = request.json
     form = NewAssetForm()
-    # asset = Asset(
-    #     user_id=body["user_id"],
-    #     # ticker=body["ticker"],
-    #     shares=body["shares"],
-    #     cost=body["cost"],
-    # )
+
     new_assest = Asset(
         user_id=current_user.get_id(),
-        stock_id=current_user.get_id(),
+        ticker=form.ticker.data,
         shares=form.shares.data,
         cost=form.cost.data,
     )
