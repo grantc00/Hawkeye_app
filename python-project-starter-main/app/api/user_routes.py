@@ -48,16 +48,17 @@ def get_user_buying_power(buying_power):
     return user_buying_power.to_int()
 
 
-# edit buying_power of user
+# ------------------------------- edit buying_power of user -------------------------------
 @user_routes.route("/<int:id>/buying_power", methods=["PATCH"])
 @login_required
-def edit_buying_power_user(id):
-    form = BuyingPowerEditForm()
+def edit_buying_power(id):
+    user = User.query.get(id)
 
-    # form["csrf_token"].data = request.cookies["csrf_token"]
+    form = BuyingPowerEditForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
 
     if current_user and form.validate_on_submit():
-        # user_id = (current_user.get_id(),)
+        user_id = (user.get_id(),)
         user.buying_power = form.buying_power.data
         db.session.commit()
 

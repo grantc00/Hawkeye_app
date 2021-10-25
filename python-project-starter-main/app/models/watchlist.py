@@ -22,8 +22,9 @@ class Watchlist(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             # "stock_id": self.stock_id,
+            'title': self.title,
             "emoji": self.emoji,
-            "buying_power": self.buying_power,
+            # "buying_power": self.buying_power,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
         }

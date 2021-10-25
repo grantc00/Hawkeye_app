@@ -10,8 +10,13 @@ import {
 } from "recharts";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addAsset, editAsset, deleteAsset } from "../../store/asset";
-import { editBuyingPower } from "../../store/user";
+import {
+  addAsset,
+  updateAsset,
+  sellAsset,
+  getAllAssets,
+} from "../../store/asset";
+import { editBuyingPower } from "../../store/session";
 
 const StockData = () => {
   const dispatch = useDispatch();
@@ -23,13 +28,39 @@ const StockData = () => {
   const [shares, setShares] = useState(0);
   const [cost, setCost] = useState();
   const [buyOrSell, setBuyOrSell] = useState("buy");
-  let StockSymbol = "COIN";
+  let StockSymbol = "FB";
   const user = useSelector((state) => state.session.user);
   const userId = user.id;
-  const ticker = "COIN";
+  const ticker = "FB";
+
+  // ---------------
+  const assets = useSelector((state) => state.asset[0]);
+  const [assetId, setAssetId] = useState();
+  const [ownStockShares, setOwnStockShares] = useState();
+  const [disable, setDisable] = React.useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    if (assets !== undefined) {
+      let findOwnedStock = assets.filter((i) => i.ticker.includes(StockSymbol));
+      if (findOwnedStock.length) {
+        setAssetId(findOwnedStock[0].id);
+        setOwnStockShares(findOwnedStock[0].shares);
+      } else {
+        setDisable(true);
+      }
+    } else {
+      console.log("cant find any assets");
+    }
+  }, [assets]);
+
   useEffect(() => {
     setCost(shares * currentPrice);
   }, [shares]);
+
+  useEffect(() => {
+    dispatch(getAllAssets());
+  }, []);
 
   /*
   *
@@ -66,27 +97,48 @@ const StockData = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(ticker);
-    const form = {
-      userId,
-      ticker,
-      shares,
-      cost,
-    };
+    // const form = {
+    //   userId,
+    //   ticker,
+    //   shares,
+    //   cost,
     if (buyOrSell === "buy") {
       if (cost < buyingPower) {
-        const buying_power = buyingPower - cost;
+        let new_buying_power = buyingPower - cost;
+        let buying_power = parseInt(new_buying_power);
         const buyingPowerForm = {
-          userId,
           buying_power,
         };
-        dispatch(addAsset(form)).then(() => {
-          // dispatch(editBuyingPower(buyingPowerForm));
-        });
+        // if there user already own this stock
+
+        if (assetId === undefined) {
+          const form = {
+            userId,
+            ticker,
+            shares,
+            cost,
+          };
+          dispatch(addAsset(form)).then(() => {
+            dispatch(editBuyingPower(buyingPowerForm, userId));
+          });
+        } else {
+          const form = {
+            userId,
+            ticker,
+            shares: Number(shares) + Number(ownStockShares),
+            cost,
+          };
+          // if there user doesn't own this stock
+          dispatch(updateAsset(form, assetId)).then(() => {
+            dispatch(editBuyingPower(buyingPowerForm, userId));
+          });
+        }
       } else {
         console.log("You need more $_$");
       }
     } else if (buyOrSell === "sell") {
       console.log("sell button clicked");
+      dispatch(sellAsset(assetId));
     }
   };
 
