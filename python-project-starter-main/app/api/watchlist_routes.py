@@ -11,22 +11,22 @@ watchlist_routes = Blueprint("watchlists", __name__)
 @watchlist_routes.route("/")
 # @login_required
 def get_watchlist():
-    userId = current_user.id
-    watchlists = Watchlist.query.filter(Watchlist.user_id == userId).all()
+    # userId = current_user.id
+    # watchlists = Watchlist.query.filter(Watchlist.user_id == userId).all()
+    watchlists = Watchlist.query.all()
 
     return {"watchlists": [watchlist.to_dict() for watchlist in watchlists]}
 
 
 # create watchlist for user
-@watchlist_routes.route("/", methods=["POST"])
+@watchlist_routes.route("/new-watchlist", methods=["POST"])
 @login_required
-def create_watchlist(id):
-    form = WatchlistForm
+def create_watchlist():
+    form = WatchlistForm()
 
-    if form.validate_on_submit():
-        new_watchlist = Watchlist(
-            user_id=current_user.get_id(), title=form.title.data, emoji=form.emoji.data
-        )
+    new_watchlist = Watchlist(
+        user_id=current_user.get_id(), title=form.title.data, emoji=form.emoji.data
+    )
 
     db.session.add(new_watchlist)
     db.session.commit()
@@ -35,14 +35,17 @@ def create_watchlist(id):
 
 
 # edit watchlist for user
-@watchlist_routes.route("/", methods=["PATCH"])
+@watchlist_routes.route("/<int:watchlist_id>/edit", methods=["PATCH"])
 @login_required
-def edit_watchlist(id):
-    body = request.json()
-    watchlist = Watchlist.query.get(id)
-    watchlist.title = body["title"]
-    watchlist.emoji = body["emoji"]
-    db.session.commit()
+def edit_watchlist(watchlist_id):
+    watchlist = Watchlist.query.get(watchlist_id)
+    form = WatchlistForm()
+    # form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if current_user and form.validate_on_submit():
+        watchlist.title = form.title.data
+        watchlist.emoji = form.emoji.data
+        db.session.commit()
 
     return watchlist.to_dict()
 

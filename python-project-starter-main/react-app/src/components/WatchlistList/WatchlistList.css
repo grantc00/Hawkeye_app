@@ -1,0 +1,52 @@
+.edit-modal-container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.edit-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.edit-modal-header h1 {
+    font-size: 16px;
+}
+
+.emojititlesave-container {
+    padding: 8px 24px 0px 18px
+}
+
+.edit-modal-mid {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 24px;
+    height: 40px;
+}
+
+.edit-modal-emoji {
+    height: 40px;
+    width: 40px;
+    align-items: center;
+}
+
+.edit-title {
+    flex-grow: 1px;
+    margin-left: 8px;
+    width: 330px;
+    height: 36px;
+    padding: 0 12px;
+}
+
+.edit-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+.edit-modal-footer button {
+    width: 378px;
+    height: 48px;
+}

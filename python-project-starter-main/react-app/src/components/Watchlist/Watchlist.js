@@ -1,10 +1,28 @@
-import React, { useState } from "react";
-import '../Watchlist/Watchlist.css'
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import "../Watchlist/Watchlist.css";
+import { getWatchlists } from "../../store/watchlist";
+import List from "../WatchlistList/WatchlistList";
+import { postWatchlist } from "../../store/watchlist";
 
 const WatchList = () => {
+  const dispatch = useDispatch();
   const [toggleCreateList, setToggleCreateList] = useState(false);
-  const [toggleWatchList, setToggleWatchList] = useState(false);
-  const [toggleDropdown, setToggleDropdown] = useState(false);
+  const watchlists = useSelector((state) => state.watchlist[0]);
+  const [emoji, setEmoji] = useState(`\u{1f369}`);
+  const [title, setTitle] = useState();
+
+  const handleCreateWatchList = () => {
+    let form = {
+      title,
+      emoji,
+    };
+    dispatch(postWatchlist(form));
+  };
+
+  useEffect(() => {
+    dispatch(getWatchlists());
+  }, [dispatch]);
 
   return (
     <div className="watch-list-container">
@@ -89,7 +107,7 @@ const WatchList = () => {
         </div>
         {toggleCreateList === true && (
           <div className="watchlist-form-container">
-            <form action="">
+            <form onSubmit={handleCreateWatchList}>
               <div className="watchlist-form-header">
                 <div>
                   {/* <span>💡</span> */}
@@ -97,9 +115,9 @@ const WatchList = () => {
                     name="goodies"
                     id="goodies"
                     onChange={(e) => {
-                      console.log(e.target.value);
+                      setEmoji(e.target.value);
                     }}
-                    defaultValue={`\u{1f369}`}
+                    value={emoji}
                   >
                     <option value={`\u{1f369}`}>{`\u{1F680}`}</option>
                     <option value={`\u{1F315}`}>{`\u{1F315}`}</option>
@@ -107,7 +125,13 @@ const WatchList = () => {
                   </select>
                 </div>
                 <div>
-                  <input type="text" />
+                  <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Watchlist Name"
+                    maxLength={50}
+                  />
                 </div>
               </div>
 
@@ -124,7 +148,7 @@ const WatchList = () => {
                   </button>
                 </div>
                 <div>
-                  <button>Create List</button>
+                  <button type="submit">Create List</button>
                 </div>
               </div>
             </form>
@@ -133,95 +157,9 @@ const WatchList = () => {
 
         <div className="watch-list-categories">
           <ul>
-            <li>
-              <div>
-                <div className="my-watchlist-header">
-                  <div className="my-watchlist-header-left">
-                    <div className="my-watchlist-header-div">
-                      <span>🚀</span>
-                    </div>
-                    <div className="my-watchlist-header-div">
-                      <label>Title</label>
-                    </div>
-                  </div>
-
-                  <div className="my-watchlist-header-right">
-                    <div className="my-watchlist-header-div">
-                      <span
-                        onClick={() =>
-                          toggleDropdown === false
-                            ? setToggleDropdown(true)
-                            : setToggleDropdown(false)
-                        }
-                      >
-                        •••
-                      </span>
-                    </div>
-                    {toggleDropdown && (
-                      <div className="dropdown">
-                        <ul>
-                          <li>
-                            <div className="dropdown-item">
-                              <span>Edit</span>
-                            </div>
-                          </li>
-
-                          <li>
-                            <div className="dropdown-item">
-                              <span>Remove</span>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
-                    <div>
-                      <span
-                        onClick={() =>
-                          toggleWatchList === false
-                            ? setToggleWatchList(true)
-                            : setToggleWatchList(false)
-                        }
-                      >
-                        ▽
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {toggleWatchList === true && (
-                <div>
-                  <ul>
-                    <li>
-                      <a href="#">
-                        <div className="my-watchlist-stocks">
-                          <div className="watchlist-stock-name">
-                            <span>TSLA</span>
-                          </div>
-                          <div className="mini-chart">📈</div>
-                          <div className="assest-stock-price">
-                            <span>$500</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div className="my-watchlist-stocks">
-                          <div className="watchlist-stock-name">
-                            <span>APPL</span>
-                          </div>
-                          <div className="mini-chart">📈</div>
-                          <div className="watchlist-stock-price">
-                            <span>$400</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </li>
+            {watchlists?.map((watchlist) => (
+              <List key={watchlist.id} {...watchlist} />
+            ))}
           </ul>
         </div>
       </div>
