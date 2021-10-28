@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../Watchlist/Watchlist.css";
-import { getWatchlists } from "../../store/watchlist";
+import { getWatchlists, postWatchlist } from "../../store/watchlist";
+import {getAllAssets} from '../../store/asset'
 import List from "../WatchlistList/WatchlistList";
-import { postWatchlist } from "../../store/watchlist";
+import Picker from "emoji-picker-react";
 
-const WatchList = () => {
+const WatchList = (watchlist) => {
   const dispatch = useDispatch();
   const [toggleCreateList, setToggleCreateList] = useState(false);
   const watchlists = useSelector((state) => state.watchlist[0]);
-  const [emoji, setEmoji] = useState(`\u{1f369}`);
+  const [chosenEmoji, setChosenEmoji] = useState(null);
+  const [showPicker, setShowPicker] = useState(false);
+  const [emoji, setEmoji] = useState(`\u{1f600}`);
   const [title, setTitle] = useState();
+  const assets = useSelector((state) => state.asset[0])
+
+  useEffect(() => {
+    dispatch(getAllAssets())
+  }, [dispatch])
+
 
   const handleCreateWatchList = () => {
     let form = {
@@ -18,6 +27,12 @@ const WatchList = () => {
       emoji,
     };
     dispatch(postWatchlist(form));
+  };
+
+  const onEmojiClick = (event, emojiObject) => {
+    console.log(emojiObject);
+    setChosenEmoji(emojiObject);
+    setEmoji(emojiObject.emoji);
   };
 
   useEffect(() => {
@@ -33,7 +48,15 @@ const WatchList = () => {
       </div>
 
       <div className="assest-stocks-container">
-        <ul>
+        {assets?.map((asset) => (
+          <div>
+            <div>{asset.cost}</div>
+            <div>{asset.ticker}</div>
+            <div>{asset.shares} shares</div>
+          </div>
+
+        ))}
+        {/* <ul>
           <li>
             <a href="#">
               <div className="assest-stocks-list">
@@ -86,7 +109,7 @@ const WatchList = () => {
               </div>
             </a>
           </li>
-        </ul>
+        </ul> */}
       </div>
 
       <div className="my-watchlist-container">
@@ -109,20 +132,15 @@ const WatchList = () => {
           <div className="watchlist-form-container">
             <form onSubmit={handleCreateWatchList}>
               <div className="watchlist-form-header">
-                <div>
-                  {/* <span>💡</span> */}
-                  <select
-                    name="goodies"
-                    id="goodies"
-                    onChange={(e) => {
-                      setEmoji(e.target.value);
-                    }}
+                <div className="edit-modal-emoji">
+                  <span
+                    onClick={() => setShowPicker((val) => !val)}
+                    onChange={(e) => setEmoji(e.target.value)}
                     value={emoji}
                   >
-                    <option value={`\u{1f369}`}>{`\u{1F680}`}</option>
-                    <option value={`\u{1F315}`}>{`\u{1F315}`}</option>
-                    <option value={`\u{1F386}`}>{`\u{1F386}`}</option>
-                  </select>
+                    {emoji}
+                    {showPicker && <Picker onEmojiClick={onEmojiClick} className='dark'/>}
+                  </span>
                 </div>
                 <div>
                   <input

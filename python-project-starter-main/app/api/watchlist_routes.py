@@ -40,7 +40,7 @@ def create_watchlist():
 def edit_watchlist(watchlist_id):
     watchlist = Watchlist.query.get(watchlist_id)
     form = WatchlistForm()
-    # form["csrf_token"].data = request.cookies["csrf_token"]
+    form["csrf_token"].data = request.cookies["csrf_token"]
 
     if current_user and form.validate_on_submit():
         watchlist.title = form.title.data
@@ -51,11 +51,18 @@ def edit_watchlist(watchlist_id):
 
 
 # delete watchlist for user
-@watchlist_routes.route("/", methods=["DELETE"])
+@watchlist_routes.route("/<int:watchlist_id>/delete", methods=["DELETE"])
 @login_required
-def delete_watchlist(id):
-    watchlist = Watchlist.query.get(id)
+def delete_watchlist(watchlist_id):
+    watchlist = Watchlist.query.get(watchlist_id)
+
     db.session.delete(watchlist)
     db.session.commit()
 
     return watchlist.to_dict()
+
+# add stock to watchlist
+# @watchlist_routes.route("/<int:watchlist_id>/add", methods=["POST"])
+# @login_required
+# def add_to_watchlist(watchlist):
+#     watchlist

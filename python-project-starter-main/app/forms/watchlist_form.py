@@ -7,3 +7,4 @@ from wtforms.validators import DataRequired
 class WatchlistForm(FlaskForm):
     title = StringField("Title", validators=[DataRequired()])
     emoji = StringField("Emoji", validators=[DataRequired()])
+

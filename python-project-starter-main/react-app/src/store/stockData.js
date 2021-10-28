@@ -11,7 +11,7 @@ const getSearch = (results) => ({ type: GET_SEARCH, payload: results });
 // fetch stock data base on user's search input
 export const searchStockData = (token, searchInput) => async (dispatch) => {
   const response = await fetch(
-    `https://sandbox.iexapis.com/stable/stock/${searchInput}/intraday-prices?token=${token}`
+    `https://cloud.iexapis.com/stable/stock/${searchInput}/intraday-prices?token=${token}`
   );
   const data = await response.json();
   dispatch(getSearch(data));

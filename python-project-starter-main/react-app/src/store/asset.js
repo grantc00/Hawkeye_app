@@ -80,7 +80,7 @@ export const updateAsset = (form, assetId) => async (dispatch) => {
   formData.append("shares", shares);
   formData.append("cost", cost);
 
-  const response = await fetch(`/api/assets/${assetId}/update-asset`, {
+  const response = await fetch(`/api/assets/${assetId}`, {
     method: "PATCH",
     body: formData,
   });
@@ -93,7 +93,7 @@ export const updateAsset = (form, assetId) => async (dispatch) => {
 
 //  Delete Assest
 export const sellAsset = (assetId) => async (dispatch) => {
-  const response = await fetch(`/api/assets/${assetId}/sell`, {
+  const response = await fetch(`/api/assets/${assetId}`, {
     method: "DELETE",
   });
 

@@ -1,0 +1,38 @@
+.search-form-container input {
+  position: relative;
+}
+
+.query-results-list ul {
+  position: absolute;
+  height: 200px;
+  list-style: none;
+  padding: 0;
+  overflow: auto;
+  /* this will hide the scrollbar in mozilla based browsers */
+  overflow: -moz-scrollbars-none;
+  scrollbar-width: none;
+  /* this will hide the scrollbar in internet explorers */
+  -ms-overflow-style: none;
+}
+
+.query-results-list ul::-webkit-scrollbar {
+  width: 0 !important;
+  display: none;
+}
+
+.query-results-list li {
+  height: 30px;
+  background: #ccc;
+  border-bottom: black 1px solid;
+}
+
+.result-item {
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.result-symbol {
+  display: flex;
+  width: 80px;
+}

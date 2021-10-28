@@ -8,7 +8,7 @@ asset_routes = Blueprint("assets", __name__)
 
 
 # Get all asset
-@asset_routes.route("")
+@asset_routes.route("/")
 def get_assets():
     assets = Asset.query.all()
     return {"assets": [asset.to_dict() for asset in assets]}
@@ -41,20 +41,28 @@ def post_asset():
 # Edit asset
 @asset_routes.route("/<int:asset_id>", methods=["PATCH"])
 @login_required
-def edit_asset(id):
-    body = request.json
-    asset = Asset.query.get(id)
-    asset.shares = body["shares"]
-    asset.cost = body["cost"]
-    db.session.commit()
+def edit_asset(asset_id):
+    asset = Asset.query.get(asset_id)
+    form = NewAssetForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if current_user and form.validate_on_submit():
+        asset.ticker = form.ticker.data
+        asset.shares = form.shares.data
+        asset.cost = form.cost.data
+        db.session.commit()
+
     return asset.to_dict()
 
 
 # Delete asset
 @asset_routes.route("/<int:asset_id>", methods=["DELETE"])
 @login_required
-def delete_asset(id):
-    asset = Asset.query.get(id)
+def delete_asset(asset_id):
+    asset = Asset.query.get(asset_id)
+
+    # user_id = current_user.get_id()
+    # if int(user_id) == asset(asset.user_id):
     db.session.delete(asset)
     db.session.commit()
 

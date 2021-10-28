@@ -74,14 +74,14 @@
     box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
     background-color: grey;
   }
-
+/* 
   .dropdown-item {
     height: 60px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     text-align: center;
-  }
+  } */
 
   span:hover {
     cursor: pointer;
