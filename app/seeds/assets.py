@@ -4,7 +4,8 @@ def seed_assets():
     assetDemo = Asset(
         user_id=1,
         cost=2000,
-        shares=100
+        shares=100,
+        ticker='TSLA'
     )
 
     db.session.add(assetDemo)
