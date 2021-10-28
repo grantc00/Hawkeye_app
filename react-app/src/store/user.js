@@ -27,7 +27,7 @@ export const getOneUser = (userId) => async (dispatch) => {
 
 //Get all users
 export const getAllUsers = () => async (dispatch) => {
-  const response = await fetch(`api/users`, {
+  const response = await fetch(`/api/users/`, {
     method: "GET",
   });
 
