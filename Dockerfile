@@ -5,6 +5,7 @@ COPY react-app/. .
 
 # You have to set this because it should be set during build time.
 ENV REACT_APP_BASE_URL=https://hawkeye-app.herokuapp.com/
+ENV REACT_APP_API_KEY=pk_df37f72f04864dfabe75746440f899b2 
 
 # Build our React App
 RUN npm install
