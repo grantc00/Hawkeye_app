@@ -50,7 +50,7 @@ function App() {
         <ProtectedRoute path="/users/:userId" exact={true}>
           <User />
         </ProtectedRoute>
-        <Route path="/stock-data" exact={true}>
+        <Route path='/stock-data/:stockticker' exact={true}>
           <StockData />
         </Route>
       </Switch>

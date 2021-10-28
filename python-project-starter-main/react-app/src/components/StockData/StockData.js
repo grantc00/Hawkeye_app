@@ -17,35 +17,43 @@ import {
   getAllAssets,
 } from "../../store/asset";
 import { editBuyingPower } from "../../store/session";
+import { searchStockData } from "../../store/stockData";
+import { useParams } from "react-router-dom";
+import { Modal } from "../../context/Modal";
 
 const StockData = () => {
   const dispatch = useDispatch();
   // const userId = useSelector((state) => state.session.user.id);
-  const buyingPower = useSelector((state) => state.session.user.buying_power);
+  const userBuyingPower = useSelector(
+    (state) => state.session.user.buying_power
+  );
   const [myArray, setMyArray] = useState();
   const [openPrice, setOpenPrice] = useState();
   const [currentPrice, setCurrentPrice] = useState();
   const [shares, setShares] = useState(0);
   const [cost, setCost] = useState();
   const [buyOrSell, setBuyOrSell] = useState("buy");
-  let StockSymbol = "FB";
+  const { stockticker } = useParams();
+  const [showModal, setShowModal] = useState(false);
+
   const user = useSelector((state) => state.session.user);
   const userId = user.id;
-  const ticker = "FB";
+  // const ticker = "AAPL";
 
   // ---------------
   const assets = useSelector((state) => state.asset[0]);
   const [assetId, setAssetId] = useState();
   const [ownStockShares, setOwnStockShares] = useState();
   const [disable, setDisable] = React.useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [ownedStockCost, setOwnStockCost] = useState();
 
   useEffect(() => {
     if (assets !== undefined) {
-      let findOwnedStock = assets.filter((i) => i.ticker.includes(StockSymbol));
+      let findOwnedStock = assets.filter((i) => i.ticker.includes(stockticker));
       if (findOwnedStock.length) {
         setAssetId(findOwnedStock[0].id);
         setOwnStockShares(findOwnedStock[0].shares);
+        setOwnStockCost(findOwnedStock[0].cost);
       } else {
         setDisable(true);
       }
@@ -62,6 +70,10 @@ const StockData = () => {
     dispatch(getAllAssets());
   }, []);
 
+  useEffect(() => {
+    dispatch(searchStockData());
+  }, []);
+
   /*
   *
   Using sandbox token. NEED to use production token before deploy
@@ -69,7 +81,7 @@ const StockData = () => {
   */
   // ========================================== Submission Functions
 
-  let API_Call = `https://sandbox.iexapis.com/stable/stock/${StockSymbol}/intraday-prices?token=${process.env.REACT_APP_API_KEY}`;
+  let API_Call = `https://cloud.iexapis.com/stable/stock/${stockticker}/intraday-prices?token=${process.env.REACT_APP_API_KEY}`;
 
   React.useEffect(() => {
     fetch(API_Call)
@@ -96,68 +108,82 @@ const StockData = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(ticker);
-    // const form = {
-    //   userId,
-    //   ticker,
-    //   shares,
-    //   cost,
     if (buyOrSell === "buy") {
-      if (cost < buyingPower) {
-        let new_buying_power = buyingPower - cost;
+      if (cost < userBuyingPower) {
+        let new_buying_power = userBuyingPower - cost;
         let buying_power = parseInt(new_buying_power);
         const buyingPowerForm = {
           buying_power,
         };
-        // if there user already own this stock
-
+        // if the user doesnt own this stock
         if (assetId === undefined) {
           const form = {
             userId,
-            ticker,
+            ticker: stockticker,
             shares,
             cost,
           };
-          dispatch(addAsset(form)).then(() => {
-            dispatch(editBuyingPower(buyingPowerForm, userId));
-          });
+          dispatch(addAsset(form))
+            .then(() => {
+              dispatch(editBuyingPower(buyingPowerForm, userId));
+            })
+            .then(() => {
+              window.location.href = "/dashboard";
+            });
         } else {
           const form = {
             userId,
-            ticker,
+            ticker: stockticker,
             shares: Number(shares) + Number(ownStockShares),
-            cost,
+            cost: Number(cost) + Number(ownedStockCost),
           };
-          // if there user doesn't own this stock
-          dispatch(updateAsset(form, assetId)).then(() => {
-            dispatch(editBuyingPower(buyingPowerForm, userId));
-          });
+          // if the user own this stock
+          dispatch(updateAsset(form, assetId))
+            .then(() => {
+              dispatch(editBuyingPower(buyingPowerForm, userId));
+            })
+            .then(() => {
+              window.location.href = "/dashboard";
+            });
         }
       } else {
         console.log("You need more $_$");
       }
     } else if (buyOrSell === "sell") {
-      console.log("sell button clicked");
-      dispatch(sellAsset(assetId));
+      if (shares == ownStockShares) {
+        dispatch(sellAsset(assetId)).then(() => {
+          window.location.href = "/dashboard";
+        });
+      } else if (shares > ownStockShares) {
+        alert("Not enough shares to sell");
+      } else if (shares < ownStockShares) {
+        const form = {
+          userId,
+          ticker: stockticker,
+          shares: Number(ownStockShares) - Number(shares),
+          cost: Number(ownedStockCost) - Number(cost),
+        };
+
+        dispatch(updateAsset(form, assetId)).then(() => {
+          let new_buying_power = userBuyingPower + cost;
+          let buying_power = parseInt(new_buying_power);
+          const buyingPowerForm = {
+            buying_power,
+          };
+          dispatch(editBuyingPower(buyingPowerForm, userId)).then(() => {
+            window.location.href = "/dashboard";
+          });
+        });
+      }
     }
   };
-
-  //  const handleSubmit = () => {
-  //   const form = {
-  //     user_id: userId,
-  //     ticker: ticker,
-  //     shares,
-  //     cost
-  //   }
-  //   dispatch(addAsset(form))
-  //  }
 
   // ========================================== COMPONENT
   return (
     <div className="main_container">
       <div className="row">
         <div className="main_content">
-          <h1>{StockSymbol}</h1>
+          <h1>{stockticker}</h1>
           <LineChart width={676} height={196} data={myArray}>
             <div></div>
             <Tooltip />
@@ -184,12 +210,12 @@ const StockData = () => {
             <div className="trade_stock_header">
               <div>
                 <span onClick={() => setBuyOrSell("buy")}>
-                  Buy {StockSymbol}
+                  Buy {stockticker}
                 </span>
               </div>
               <div>
                 <span onClick={() => setBuyOrSell("sell")}>
-                  Sell {StockSymbol}
+                  Sell {stockticker}
                 </span>
               </div>
             </div>
@@ -262,7 +288,20 @@ const StockData = () => {
               )}
 
               <footer className="trade_stock_footer">
-                <label>${buyingPower} buying power availabe</label>
+                <label className="buying-power-label">
+                  ${userBuyingPower} buying power availabe
+                </label>
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="add-watchlist-button"
+                >
+                  add to watchlist
+                </button>
+                {showModal && (
+                  <Modal onClick={() => setShowModal(false)}>
+                    
+                  </Modal>
+                )}
               </footer>
             </div>
           </form>

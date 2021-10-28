@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import LogoutButton from '../auth/LogoutButton';
+import SearchBar from '../SearchBar/SearchBar';
 import './NavBar.css';
 
 
@@ -45,8 +46,8 @@ const NavBar = () => {
         />
       </a>
       <div className='nav-search-bar'>
-        {/* <SearchBar /> */}
-        <div>search bar</div>
+        <SearchBar />
+        {/* <div>search bar</div> */}
       </div>
       <div className='nav-right'>
         <ul className='nav-right-ul'>

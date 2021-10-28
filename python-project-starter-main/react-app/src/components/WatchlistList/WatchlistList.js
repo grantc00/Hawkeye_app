@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getWatchlists } from "../../store/watchlist";
+import { useHistory } from "react-router-dom";
 import { Modal } from "../../context/Modal";
 import "./WatchlistList.css";
 import Picker from "emoji-picker-react";
-import { patchWatchlist } from "../../store/watchlist";
+import {
+  patchWatchlist,
+  removeWatchlist,
+  getWatchlists,
+} from "../../store/watchlist";
 
 const List = (watchlist) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [toggleWatchList, setToggleWatchList] = useState(false);
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -21,11 +26,19 @@ const List = (watchlist) => {
     const form = {
       title,
       emoji,
+      watchlist_id: watchlist.id,
     };
-    const watchlistId = watchlist.id;
+    dispatch(patchWatchlist(form));
+  };
 
-    console.log(title, emoji);
-    dispatch(patchWatchlist(form, watchlistId));
+  const handleDeleteWatchlist = (e) => {
+    e.preventDefault();
+    const watchlistId = watchlist.id;
+    // dispatch(removeWatchlist(watchlistId).then(() => {
+    //   dispatch(getWatchlists())
+    // }));
+    dispatch(removeWatchlist(watchlistId));
+    window.location.href = "/dashboard";
   };
 
   const onEmojiClick = (event, emojiObject) => {
@@ -64,7 +77,12 @@ const List = (watchlist) => {
                 <ul>
                   <li>
                     <div className="dropdown-item">
-                      <span onClick={() => setShowModal(true)}>Edit</span>
+                      <span
+                        className="edit-modal-edit"
+                        onClick={() => setShowModal(true)}
+                      >
+                        Edit
+                      </span>
                       {showModal && (
                         <Modal onClick={() => setShowModal(false)}>
                           <form onSubmit={handleEditWatchList}>
@@ -108,12 +126,14 @@ const List = (watchlist) => {
                           </form>
                         </Modal>
                       )}
-                    </div>
-                  </li>
-
-                  <li>
-                    <div className="dropdown-item">
-                      <span>Remove</span>
+                      <li>
+                        <span
+                          className="edit-modal-remove"
+                          onClick={handleDeleteWatchlist}
+                        >
+                          Remove
+                        </span>
+                      </li>{" "}
                     </div>
                   </li>
                 </ul>

@@ -1,52 +1,77 @@
 .edit-modal-container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
-
 .edit-modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .edit-modal-header h1 {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .emojititlesave-container {
-    padding: 8px 24px 0px 18px
+  padding: 8px 24px 0px 18px;
 }
 
 .edit-modal-mid {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 24px;
-    height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 24px;
+  height: 40px;
 }
 
 .edit-modal-emoji {
-    height: 40px;
-    width: 40px;
-    align-items: center;
+  height: 40px;
+  width: 40px;
+  align-items: center;
 }
 
 .edit-title {
-    flex-grow: 1px;
-    margin-left: 8px;
-    width: 330px;
-    height: 36px;
-    padding: 0 12px;
+  flex-grow: 1px;
+  margin-left: 8px;
+  width: 330px;
+  height: 36px;
+  padding: 0 12px;
 }
 
 .edit-modal-footer {
-    display: flex;
-    justify-content: flex-end;
-
+  display: flex;
+  justify-content: flex-end;
 }
+
+.dropdown-item .edit-modal-edit  {
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.dropdown-item .edit-modal-remove  {
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
 
 .edit-modal-footer button {
-    width: 378px;
-    height: 48px;
+  width: 378px;
+  height: 48px;
 }
+
+.edit-modal-footer span {
+  width: 378px;
+  height: 48px;
+}
+/* 
+.emoji-picker {
+  --num-columns: 6;
+  --emoji-size: 3rem;
+  --background: gray;
+} */

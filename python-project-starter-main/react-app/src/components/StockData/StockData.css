@@ -1,50 +1,63 @@
 .main_container {
-    box-sizing: inherit;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-  }
+  box-sizing: inherit;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
 
-  .row {
-    padding-top: 36px;
-    width: 1024px;
-    display: flex;
-    justify-content: space-around;
-    flex-direction: row;
-  }
+.row {
+  padding-top: 36px;
+  width: 1024px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
 
-  .main_trade {
-    width: 276px;
-    border: 1px solid lightgrey;
-  }
+.main_trade {
+  width: 276px;
+  border: 1px solid lightgrey;
+}
 
-  .trade_stock_header,
-  .trade_stock_shares_header,
-  .trade_stock_shares,
-  .trade_stock_price,
-  .trade_stock_est_credit {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    padding: 10px;
-  }
+.trade_stock_header,
+.trade_stock_shares_header,
+.trade_stock_shares,
+.trade_stock_price,
+.trade_stock_est_credit {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 10px;
+}
 
-  .submit_order_btn,
-  .trade_stock_footer {
-    display: flex;
-    justify-content: center;
-    padding: 10px;
-  }
+.submit_order_btn,
+.trade_stock_footer {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
 
-  .trade_stock_input {
-    padding-left: 12px;
-    width: 80px;
-  }
+.trade_stock_footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.buying-power-label{
+  padding: 10px;
+}
 
-  .sell_order_btn {
-    color: red;
-  }
+.add-watchlist-button{
+  padding: 10px;
+}
 
-  .buy_order_btn {
-    color: green;
-  }
+.trade_stock_input {
+  padding-left: 12px;
+  width: 80px;
+}
+
+.sell_order_btn {
+  color: red;
+}
+
+.buy_order_btn {
+  color: green;
+}
