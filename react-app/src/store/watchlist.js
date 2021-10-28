@@ -18,7 +18,7 @@ const addstocktoWatchlist = (watchlist) => ({
 // ---------------------------  Defined Thunk(s) --------------------------------
 // Get all watchlist
 export const getWatchlists = () => async (dispatch) => {
-  const response = await fetch(`/api/watchlists`, {
+  const response = await fetch(`/api/watchlists/`, {
     method: "GET",
   });
 
