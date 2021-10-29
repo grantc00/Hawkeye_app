@@ -5,13 +5,16 @@ import search from "./stockData";
 import asset from './asset'
 import user from './user';
 import watchlist from "./watchlist";
+import watchlist_stock from './watchlist_stock';
+
 
 const rootReducer = combineReducers({
   session,
   search,
   watchlist,
   user,
-  asset
+  asset,
+  watchlist_stock
 });
 
 let enhancer;

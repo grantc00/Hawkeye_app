@@ -186,3 +186,4 @@ const WatchList = (watchlist) => {
 };
 
 export default WatchList;
+

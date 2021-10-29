@@ -10,4 +10,4 @@ class WatchlistForm(FlaskForm):
 
 class AddStockForm(FlaskForm):
     watchlist_id = IntegerField('Watchlist_id')
-    # stock_ticker = StringField('Stock_ticker')
+    stock_ticker = StringField('Stock_ticker')
