@@ -18,9 +18,11 @@ import {
 } from "../../store/asset";
 import { editBuyingPower } from "../../store/session";
 import { searchStockData } from "../../store/stockData";
-import { addToWatchlist, getWatchlists } from "../../store/watchlist";
+import { getWatchlists } from "../../store/watchlist";
+import { addToWatchlist } from "../../store/watchlist_stock";
 import { useParams } from "react-router-dom";
 import { Modal } from "../../context/Modal";
+import ListCheck from "../ListCheck/ListCheck";
 
 const StockData = () => {
   const dispatch = useDispatch();
@@ -36,7 +38,9 @@ const StockData = () => {
   const [buyOrSell, setBuyOrSell] = useState("buy");
   const { stockticker } = useParams();
   const [showModal, setShowModal] = useState(false);
-  const [checked, setChecked] = useState(false);
+
+  //checked add stock to watchlist
+  const [checked, setChecked] = React.useState();
 
   const user = useSelector((state) => state.session.user);
   const userId = user.id;
@@ -49,16 +53,31 @@ const StockData = () => {
   const [disable, setDisable] = React.useState(false);
   const [ownedStockCost, setOwnStockCost] = useState();
   const watchlists = useSelector((state) => state.watchlist[0]);
-  const [watchlistId, setWatchlistId] = useState()
+  const [watchlistId, setWatchlistId] = useState();
+  const [addToWatchlistId, setAddToWatchlistId] = useState();
   // console.log(watchlists, "---------------");
 
-  const handleAddStock = () => {
-    console.log(watchlistId);
+  const handleChange = (e) => {
+    const target = e.target;
+    if (target.checked) {
+      setChecked(target.value);
+    }
   };
 
-  const handleWatchlistChange =(e) => {
-    setWatchlistId(e.target.value)
-  }
+  const handleAddStockSubmit = (e) => {
+    e.preventDefault();
+    const watchlist_id = addToWatchlistId;
+
+    const form = {
+      watchlist_id,
+      stock_ticker: stockticker,
+    };
+    dispatch(addToWatchlist(form));
+  };
+
+  const handleWatchlistChange = (e) => {
+    setWatchlistId(e.target.value);
+  };
 
   useEffect(() => {
     if (assets !== undefined) {
@@ -195,6 +214,10 @@ const StockData = () => {
     }
   };
 
+  const sendWatchlistId = (value) => {
+    setAddToWatchlistId(value);
+  };
+
   // ========================================== COMPONENT
   return (
     <div className="main_container">
@@ -308,43 +331,37 @@ const StockData = () => {
                 <label className="buying-power-label">
                   ${userBuyingPower} buying power availabe
                 </label>
-                <span
-                  onClick={() => setShowModal(true)}
-                  className="add-watchlist-button"
-                >
-                  add to watchlist
-                </span>
-                {showModal && (
-                  <Modal onClick={() => setShowModal(false)}>
-                    <form onSubmit={handleAddStock}>
-                      <div className="addstock-modal-container">
-                        <div className="addstock-modal-header">
-                          <h1>Add to Your Lists</h1>
-                          <button onClick={() => setShowModal(false)}>
-                            close
-                          </button>
-                        </div>
-                        <ul className="stock-list">
-                          {watchlists?.map((watchlist) => (
-                            <div key={watchlist.id}>
-                              <div>{watchlist.title}</div>
-                              <input
-                                type="radio"
-                                value={watchlist.id}
-                                checked={checked}
-                                onChange={handleWatchlistChange}
-                              />
-                            </div>
-                          ))}
-                        </ul>
-                        <button className="save-button">save</button>
-                      </div>
-                    </form>
-                  </Modal>
-                )}
               </footer>
             </div>
           </form>
+          <span
+            onClick={() => setShowModal(true)}
+            className="add-watchlist-button"
+          >
+            add to watchlist
+          </span>
+          {showModal && (
+            <Modal onClick={() => setShowModal(false)}>
+              <form onSubmit={handleAddStockSubmit}>
+                <div className="addstock-modal-container">
+                  <div className="addstock-modal-header">
+                    <h1>Add to Your Lists</h1>
+                    <button onClick={() => setShowModal(false)}>close</button>
+                  </div>
+                  <ul className="stock-list">
+                    {watchlists?.map((watchlist) => (
+                      <ListCheck
+                        key={watchlist.id}
+                        watchlist={watchlist}
+                        sendWatchlistId={sendWatchlistId}
+                      />
+                    ))}
+                  </ul>
+                  <button className="save-button">save</button>
+                </div>
+              </form>
+            </Modal>
+          )}
         </div>
       </div>
     </div>

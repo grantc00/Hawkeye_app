@@ -9,6 +9,7 @@ import {
   removeWatchlist,
   getWatchlists,
 } from "../../store/watchlist";
+import { getWatchlistStocks } from "../../store/watchlist_stock";
 
 const List = (watchlist) => {
   const dispatch = useDispatch();
@@ -21,6 +22,14 @@ const List = (watchlist) => {
   const [showPicker, setShowPicker] = useState(false);
   const [emoji, setEmoji] = useState(watchlist.emoji);
   const [title, setTitle] = useState(watchlist.title);
+
+  const allWatchListStocks = useSelector((state) => state.watchlist_stock[0]);
+
+  useEffect(() => {
+    dispatch(getWatchlistStocks());
+  }, []);
+
+  console.log(allWatchListStocks);
 
   const handleEditWatchList = () => {
     const form = {

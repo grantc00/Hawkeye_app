@@ -15,6 +15,7 @@ class Watchlist(db.Model):
 
     #relationship
     users = db.relationship('User', foreign_keys=[user_id], back_populates='watchlists')
+    watchlist_stocks = db.relationship('Watchlist_stocks', back_populates='watchlists')
     # stocks = db.relationship('Stock', foreign_keys=[stock_id], back_populates='watchlists')
 
     def to_dict(self):

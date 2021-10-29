@@ -3,17 +3,17 @@ const GET_WATCHLISTS = "watchlists/GET_WATCHLISTS";
 const CREATE_WATCHLIST = "watchlists/CREATE_WATCHLIST";
 const EDIT_WATCHLIST = "watchlists/EDIT_WATCHLIST";
 const DELETE_WATCHLIST = "watchlists/DELETE_WATCHLIST";
-const ADDSTOCK_WATCHLIST = "watchlists/ADDSTOCK_WATCHLIST";
+// const ADDSTOCK_WATCHLIST = "watchlists/ADDSTOCK_WATCHLIST";
 
 // --------------------------- Defined Action Creator(s) --------------------------
 const getWatchlist = (watchlists) => ({ type: GET_WATCHLISTS, watchlists });
 const editWatchlist = (watchlist) => ({ type: EDIT_WATCHLIST, watchlist });
 const createWatchlist = (watchlist) => ({ type: CREATE_WATCHLIST, watchlist });
 const deleteWatchlist = (watchlist) => ({ type: DELETE_WATCHLIST, watchlist });
-const addstocktoWatchlist = (watchlist) => ({
-  type: ADDSTOCK_WATCHLIST,
-  watchlist,
-});
+// const addstocktoWatchlist = (watchlist) => ({
+//   type: ADDSTOCK_WATCHLIST,
+//   watchlist,
+// });
 
 // ---------------------------  Defined Thunk(s) --------------------------------
 // Get all watchlist
@@ -83,23 +83,23 @@ export const removeWatchlist = (watchlist_id) => async (dispatch) => {
 };
 
 // Add stock to watchlist
-export const addToWatchlist = (form) => async (dispatch) => {
-  const { watchlist_id } = form;
+// export const addToWatchlist = (form) => async (dispatch) => {
+//   const { watchlist_id } = form;
 
-  const formData = new FormData();
-  formData.append("watchlist_id", watchlist_id);
-  // formData.append("stock_ticker", stock_ticker);
+//   const formData = new FormData();
+//   formData.append("watchlist_id", watchlist_id);
+//   // formData.append("stock_ticker", stock_ticker);
 
-  const response = await fetch(`/api/watchlists/${watchlist_id}/add`, {
-    method: "POST",
-    body: formData,
-  });
+//   const response = await fetch(`/api/watchlists/${watchlist_id}/add`, {
+//     method: "POST",
+//     body: formData,
+//   });
 
-  if (response.ok) {
-    const data = await response.json();
-    dispatch(addstocktoWatchlist(data));
-  }
-};
+//   if (response.ok) {
+//     const data = await response.json();
+//     dispatch(addstocktoWatchlist(data));
+//   }
+// };
 
 // export const removeWatchlist = (watchlist_id) => async(dispatch) => {
 //   await fetch(`/api/watchlists/${watchlist_id}/delete`, {
@@ -122,8 +122,6 @@ const watchlistReducer = (state = initialState, action) => {
       return newState;
     case DELETE_WATCHLIST:
       return newState.filter((e) => action.watchlist.id !== e.id);
-    case ADDSTOCK_WATCHLIST:
-      return [...newState, action.watchlist];
     default:
       return state;
   }
