@@ -18,12 +18,12 @@ const SignUpForm = () => {
     const errors = [];
     if (password !== confirmPassword)
       errors.push("Those passwords didn’t match. Try again.");
-    if (usersname.length <= 0) errors.push("Please enter an username");
-    if (email.length <= 0 || !email.includes("@"))
-      errors.push("Please enter an valid email address");
-    if (buyingPower <= 0) errors.push("Buying Power must be more than $0");
+    // if (usersname.length <= 0) errors.push("Please enter an username");
+    // if (email.length <= 0 || !email.includes("@"))
+    //   errors.push("Please enter an valid email address");
+    if (buyingPower < 0) errors.push("Buying Power must be more than $0");
     setErrors(errors);
-  }, [usersname, email, password, confirmPassword, buyingPower]);
+  }, [password, confirmPassword, buyingPower]);
 
   const onSignUp = async (e) => {
     e.preventDefault();
@@ -75,6 +75,7 @@ const SignUpForm = () => {
           name="usersname"
           onChange={updateUsername}
           value={usersname}
+          required={true}
         ></input>
       </div>
       <div>
@@ -84,6 +85,7 @@ const SignUpForm = () => {
           name="email"
           onChange={updateEmail}
           value={email}
+          required={true}
         ></input>
       </div>
       <div>
@@ -93,6 +95,7 @@ const SignUpForm = () => {
           name="password"
           onChange={updatePassword}
           value={password}
+          required={true}
         ></input>
       </div>
       <div>
@@ -112,6 +115,7 @@ const SignUpForm = () => {
           name="buying_power"
           onChange={updateBuyingPower}
           value={buyingPower}
+          required={true}
         />
       </div>
       <button type="submit">Sign Up</button>
