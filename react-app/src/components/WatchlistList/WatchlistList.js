@@ -22,6 +22,7 @@ const List = (watchlist) => {
   const [showPicker, setShowPicker] = useState(false);
   const [emoji, setEmoji] = useState(watchlist.emoji);
   const [title, setTitle] = useState(watchlist.title);
+  const watchlists = useSelector((state) => state.watchlist[0]);
 
   const allWatchListStocks = useSelector((state) => state.watchlist_stock[0]);
 
@@ -30,6 +31,7 @@ const List = (watchlist) => {
   }, []);
 
   console.log(allWatchListStocks);
+  console.log(watchlists, "----------------");
 
   const handleEditWatchList = () => {
     const form = {
@@ -166,7 +168,16 @@ const List = (watchlist) => {
       {toggleWatchList === true && (
         <div>
           <ul>
-            <li>
+            <div>
+              <ul>
+                {allWatchListStocks
+                  ?.filter((stock) => stock.watchlist_id == watchlist.id)
+                  .map((s) => {
+                    return <li>{s.stock_ticker}</li>;
+                  })}
+              </ul>
+            </div>
+            {/* <li>
               <a href="#">
                 <div className="my-watchlist-stocks">
                   <div className="watchlist-stock-name">
@@ -178,8 +189,8 @@ const List = (watchlist) => {
                   </div>
                 </div>
               </a>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <a href="#">
                 <div className="my-watchlist-stocks">
                   <div className="watchlist-stock-name">
@@ -191,7 +202,7 @@ const List = (watchlist) => {
                   </div>
                 </div>
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
       )}

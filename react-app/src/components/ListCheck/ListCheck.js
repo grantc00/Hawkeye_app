@@ -1,40 +1,32 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-// import { getWatchlists } from "../../store/watchlist";
+import { useState } from "react";
 
 const ListCheck = ({ watchlist, sendWatchlistId }) => {
-  //   const dispatch = useDispatch();
-
-  //   const watchlists = useSelector((state) => state.watchlist[0]);
-
   const [checked, setChecked] = useState();
 
+  // const handleChange = (e) => {
+  //   const target = e.target.value;
+  //   console.log(target);
+  //   // setChecked(e.target.value);
+  //   sendWatchlistId(target);
+  // };
+
   const handleChange = (e) => {
-    const target = e.target.value;
-    if (target.checked) {
-      setChecked(e);
-    }
-    // console.log(target.value);
-    sendWatchlistId(target);
+    setChecked(e.target.value);
+    console.log(e.target.value);
   };
 
-  //   useEffect(() => {
-  //     dispatch(getWatchlists());
-  //   }, []);
-
   return (
-    <div>
-      <div key={watchlist.id}>
-        <div>{watchlist.title}</div>
-        <input
-          type="radio"
-          value={watchlist.id}
-          checked={checked}
-          onChange={handleChange}
-        />
-      </div>
-    </div>
+    <li>
+      {/* <label>{watchlist.title}</label>
+      <input
+        type="radio"
+        id={watchlist.id}
+        name={watchlist.name}
+        value={watchlist.id}
+        onChange={handleChange} */}
+      <input type="radio" value="1" onChange={handleChange} />
+    </li>
   );
 };
 

@@ -36,6 +36,7 @@ function SearchBar() {
 
   const handleQueryResultClick = (value) => {
     history.push(`/stock-data/${value}`);
+    window.location.reload()
     setQuery('')
   };
 
