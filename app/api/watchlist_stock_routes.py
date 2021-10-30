@@ -32,3 +32,13 @@ def get_watchlist_stocks():
             watchlist_stock.to_dict() for watchlist_stock in watchlist_stocks
         ]
     }
+
+# delete stocks from watchlist
+@watchlist_stock_routes.route("/<int:watchlist_stock_id>/delete", methods=['DELETE'])
+def delete_stocks_watchlist(watchlist_stock_id):
+    stock = Watchlist_stocks.query.get(watchlist_stock_id)
+
+    db.session.delete(stock)
+    db.session.commit()
+
+    return stock.to_dict()
