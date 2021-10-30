@@ -52,13 +52,20 @@ const NavBar = () => {
       <div className='nav-right'>
         <ul className='nav-right-ul'>
           <li>
-            <NavLink to='/dashboard' exact={true} activeClassName='active'>
-              Dashboard
-            </NavLink>
+            {/* <NavLink to='/about' exact={true} activeClassName='active'>
+              Github
+            </NavLink> */}
+            <a href='https://github.com/grantc00' target="_blank" rel="noreferrer">Github</a>
           </li>
           <li>
-            <NavLink to='/users' exact={true} activeClassName='active'>
-              Users
+            {/* <NavLink to='/about' exact={true} activeClassName='active'>
+              Github
+            </NavLink> */}
+            <a href="https://www.linkedin.com/in/grant-chiu-964766206/" target="_blank" rel="noreferrer">Linkedin</a>
+          </li>
+          <li>
+            <NavLink to='/dashboard' exact={true} activeClassName='active'>
+              Dashboard
             </NavLink>
           </li>
           <li>

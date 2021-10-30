@@ -37,13 +37,12 @@ const sellAssets = (assets) => {
 
 //  Get All Assest
 export const getAllAssets = () => async (dispatch) => {
-  const response = await fetch(`/api/assets/`, {
+  const response = await fetch(`/api/assets`, {
     method: "GET",
   });
 
   if (response.ok) {
     const data = await response.json();
-
     dispatch(getAssets(data.assets));
     return response;
   }

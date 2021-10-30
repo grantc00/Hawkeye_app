@@ -6,10 +6,11 @@ import { signUp } from "../../store/session";
 
 const SignUpForm = () => {
   const [errors, setErrors] = useState([]);
-  const [username, setUsername] = useState("");
+  const [usersname, setUsersname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [buyingPower, setBuyingPower] = useState("");
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
 
@@ -17,16 +18,19 @@ const SignUpForm = () => {
     const errors = [];
     if (password !== confirmPassword)
       errors.push("Those passwords didn’t match. Try again.");
-    if (username.length <= 0) errors.push("Please enter an username");
+    if (usersname.length <= 0) errors.push("Please enter an username");
     if (email.length <= 0 || !email.includes("@"))
       errors.push("Please enter an valid email address");
+    if (buyingPower <= 0) errors.push("Buying Power must be more than $0");
     setErrors(errors);
-  }, [username,email, password, confirmPassword]);
+  }, [usersname, email, password, confirmPassword, buyingPower]);
 
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
-      const data = await dispatch(signUp(username, email, password));
+      const data = await dispatch(
+        signUp(usersname, email, password, buyingPower)
+      );
       if (data) {
         setErrors(data);
       }
@@ -34,7 +38,7 @@ const SignUpForm = () => {
   };
 
   const updateUsername = (e) => {
-    setUsername(e.target.value);
+    setUsersname(e.target.value);
   };
 
   const updateEmail = (e) => {
@@ -47,6 +51,10 @@ const SignUpForm = () => {
 
   const updateConfirmPassword = (e) => {
     setConfirmPassword(e.target.value);
+  };
+
+  const updateBuyingPower = (e) => {
+    setBuyingPower(e.target.value);
   };
 
   if (user) {
@@ -64,9 +72,9 @@ const SignUpForm = () => {
         <label>User Name</label>
         <input
           type="text"
-          name="username"
+          name="usersname"
           onChange={updateUsername}
-          value={username}
+          value={usersname}
         ></input>
       </div>
       <div>
@@ -96,6 +104,15 @@ const SignUpForm = () => {
           value={confirmPassword}
           required={true}
         ></input>
+      </div>
+      <div>
+        <label>Buying Power</label>
+        <input
+          type="number"
+          name="buying_power"
+          onChange={updateBuyingPower}
+          value={buyingPower}
+        />
       </div>
       <button type="submit">Sign Up</button>
     </form>

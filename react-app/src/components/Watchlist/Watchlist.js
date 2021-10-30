@@ -15,10 +15,13 @@ const WatchList = (watchlist) => {
   const [emoji, setEmoji] = useState(`\u{1f600}`);
   const [title, setTitle] = useState();
   const assets = useSelector((state) => state.asset[0]);
+  const userId = useSelector((state) => state.session.user.id);
 
   useEffect(() => {
     dispatch(getAllAssets());
   }, [dispatch]);
+
+  console.log(assets);
 
   const handleCreateWatchList = () => {
     let form = {
@@ -47,13 +50,23 @@ const WatchList = (watchlist) => {
       </div>
 
       <div className="assest-stocks-container">
-        {assets?.map((asset) => (
+        {/* {assets?.map((asset) => (
           <div>
             <div>{asset.cost}</div>
             <div>{asset.ticker}</div>
             <div>{asset.shares} shares</div>
           </div>
-        ))}
+        ))} */}
+
+        {assets
+          ?.filter((asset) => asset.user_id == userId)
+          .map((item) => (
+            <div>
+              <div>{item.cost}</div>
+              <div>{item.ticker}</div>
+              <div>{item.shares} shares</div>
+            </div>
+          ))}
         {/* <ul>
           <li>
             <a href="#">

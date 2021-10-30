@@ -52,6 +52,7 @@ const StockData = () => {
   // ---------------
   const assets = useSelector((state) => state.asset[0]);
   const [assetId, setAssetId] = useState();
+  const [assetUserId, setAssetUserId] = useState();
   const [ownStockShares, setOwnStockShares] = useState();
   const [disable, setDisable] = React.useState(false);
   const [ownedStockCost, setOwnStockCost] = useState();
@@ -74,7 +75,7 @@ const StockData = () => {
       watchlist_id,
       stock_ticker: stockticker,
     };
-    dispatch(addToWatchlist(form)).then(history.push('/dashboard'));
+    dispatch(addToWatchlist(form)).then(history.push("/dashboard"));
   };
 
   const handleWatchlistChange = (e) => {
@@ -86,6 +87,7 @@ const StockData = () => {
       let findOwnedStock = assets.filter((i) => i.ticker.includes(stockticker));
       if (findOwnedStock.length) {
         setAssetId(findOwnedStock[0].id);
+        setAssetUserId(findOwnedStock[0].user_id);
         setOwnStockShares(findOwnedStock[0].shares);
         setOwnStockCost(findOwnedStock[0].cost);
       } else {
@@ -95,6 +97,9 @@ const StockData = () => {
       console.log("cant find any assets");
     }
   }, [assets]);
+
+  console.log("assetId", assetId);
+  console.log("assetUserId", assetUserId);
 
   useEffect(() => {
     dispatch(getWatchlists());
@@ -154,7 +159,7 @@ const StockData = () => {
           buying_power,
         };
         // if the user doesnt own this stock
-        if (assetId === undefined) {
+        if (assetId === undefined || userId !== assetUserId) {
           const form = {
             userId,
             ticker: stockticker,
@@ -168,7 +173,7 @@ const StockData = () => {
             .then(() => {
               window.location.href = "/dashboard";
             });
-        } else {
+        } else if (userId === assetUserId) {
           const form = {
             userId,
             ticker: stockticker,
@@ -355,12 +360,12 @@ const StockData = () => {
                   <button onClick={() => setShowModal(false)}>close</button>
                 </div>
                 <form onSubmit={handleAddStockSubmit}>
-                  <ul className='stock-list'>
+                  <ul className="stock-list">
                     {watchlists?.map((watchlist) => (
                       <li>
                         <label>{watchlist.title}</label>
                         <input
-                          type='radio'
+                          type="radio"
                           id={watchlist.id}
                           name={watchlist.name}
                           value={watchlist.id}
@@ -370,7 +375,7 @@ const StockData = () => {
                       </li>
                     ))}
                   </ul>
-                  <button className='save-button'>save</button>
+                  <button className="save-button">save</button>
                 </form>
               </div>
             </Modal>
