@@ -8,7 +8,7 @@ asset_routes = Blueprint("assets", __name__)
 
 
 # Get all asset
-@asset_routes.route("/")
+@asset_routes.route("")
 def get_assets():
     assets = Asset.query.all()
     return {"assets": [asset.to_dict() for asset in assets]}

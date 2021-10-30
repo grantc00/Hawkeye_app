@@ -41,18 +41,18 @@ function App() {
         <Route path="/" exact={true}>
           <Homepage />
         </Route>
-        <Route path="/dashboard" exact={true}>
+        <ProtectedRoute path="/dashboard" exact={true}>
           <Dashboard />
-        </Route>
+        </ProtectedRoute>
         <ProtectedRoute path="/users" exact={true}>
           <UsersList />
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId" exact={true}>
           <User />
         </ProtectedRoute>
-        <Route path='/stock-data/:stockticker' exact={true}>
+        <ProtectedRoute path='/stock-data/:stockticker' exact={true}>
           <StockData />
-        </Route>
+        </ProtectedRoute>
       </Switch>
     </BrowserRouter>
   );

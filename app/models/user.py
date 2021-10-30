@@ -8,8 +8,9 @@ class User(db.Model, UserMixin):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(255), nullable=False)
-    last_name = db.Column(db.String(255), nullable=False)
+    # first_name = db.Column(db.String(255), nullable=False)
+    # last_name = db.Column(db.String(255), nullable=False)
+    usersname = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
     buying_power = db.Column(db.Integer, nullable=False)
     hashed_password = db.Column(db.String(255), nullable=False)
@@ -33,8 +34,7 @@ class User(db.Model, UserMixin):
     def to_dict(self):
         return {
             "id": self.id,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
+            "usersname": self.usersname,
             "email": self.email,
             "buying_power": self.buying_power,
             "created_at": self.created_at,
