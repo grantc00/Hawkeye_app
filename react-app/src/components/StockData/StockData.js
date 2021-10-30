@@ -10,6 +10,7 @@ import {
 } from "recharts";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Redirect, useHistory } from "react-router-dom";
 import {
   addAsset,
   updateAsset,
@@ -25,6 +26,8 @@ import { Modal } from "../../context/Modal";
 import ListCheck from "../ListCheck/ListCheck";
 
 const StockData = () => {
+  const history = useHistory();
+
   const dispatch = useDispatch();
   // const userId = useSelector((state) => state.session.user.id);
   const userBuyingPower = useSelector(
@@ -55,24 +58,23 @@ const StockData = () => {
   const watchlists = useSelector((state) => state.watchlist[0]);
   const [watchlistId, setWatchlistId] = useState();
   const [addToWatchlistId, setAddToWatchlistId] = useState();
+  const [selectWatchlistId, setSelectWatchlistId] = useState();
   // console.log(watchlists, "---------------");
 
   const handleChange = (e) => {
-    const target = e.target;
-    if (target.checked) {
-      setChecked(target.value);
-    }
+    const target = e.target.value;
+    setSelectWatchlistId(target);
   };
 
   const handleAddStockSubmit = (e) => {
     e.preventDefault();
-    const watchlist_id = addToWatchlistId;
+    const watchlist_id = selectWatchlistId;
 
     const form = {
       watchlist_id,
       stock_ticker: stockticker,
     };
-    dispatch(addToWatchlist(form));
+    dispatch(addToWatchlist(form)).then(history.push('/dashboard'));
   };
 
   const handleWatchlistChange = (e) => {
@@ -353,25 +355,22 @@ const StockData = () => {
                   <button onClick={() => setShowModal(false)}>close</button>
                 </div>
                 <form onSubmit={handleAddStockSubmit}>
-                  <div className="stock-list">
+                  <ul className='stock-list'>
                     {watchlists?.map((watchlist) => (
-                      // <ListCheck
-                      //   key={watchlist.id}
-                      //   watchlist={watchlist}
-                      //   sendWatchlistId={sendWatchlistId}
-                      // />
-                      <div key={watchlist.id}>
-                        <input
-                          type="radio"
-                          key={watchlist.id}
-                          value={watchlist.id}
-                          onChange={handleAddStock}
-                        />
+                      <li>
                         <label>{watchlist.title}</label>
-                      </div>
+                        <input
+                          type='radio'
+                          id={watchlist.id}
+                          name={watchlist.name}
+                          value={watchlist.id}
+                          checked={watchlist.id == selectWatchlistId}
+                          onChange={handleChange}
+                        />
+                      </li>
                     ))}
-                  </div>
-                  <button className="save-button">save</button>
+                  </ul>
+                  <button className='save-button'>save</button>
                 </form>
               </div>
             </Modal>

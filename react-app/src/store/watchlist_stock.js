@@ -1,6 +1,7 @@
 // --------------------------- Defined Action Types as Constants ---------------------
 const ADDSTOCK_WATCHLIST = "watchlists/ADDSTOCK_WATCHLIST";
 const GETSTOCK_WATCHLIST = "watchlists/GETSTOCK_WATCHLIST";
+const DELETESTOCK_WATCHLIST = "watchlists/DELETESTOCK_WATCHLIST";
 
 // --------------------------- Defined Action Creator(s) --------------------------
 const addstocktoWatchlist = (watchlist) => ({
@@ -10,6 +11,11 @@ const addstocktoWatchlist = (watchlist) => ({
 
 const getStockToWatchlist = (watchlist) => ({
   type: GETSTOCK_WATCHLIST,
+  watchlist,
+});
+
+const removeStockWatchlist = (watchlist) => ({
+  type: DELETESTOCK_WATCHLIST,
   watchlist,
 });
 
@@ -47,6 +53,20 @@ export const addToWatchlist = (form) => async (dispatch) => {
   }
 };
 
+// Remove stock from watchlist
+export const removeStock = (watchlist_stock_id) => async (dispatch) => {
+  const response = await fetch(
+    `/api/watchlist_stock/${watchlist_stock_id}/delete`,
+    {
+      method: "DELETE",
+    }
+  );
+  if (response.ok) {
+    const stock = await response.json();
+    dispatch(removeStockWatchlist(stock));
+  }
+};
+
 // ---------------------------  State & Reducer --------------------------------
 const initialState = [];
 
@@ -57,6 +77,8 @@ const watchlist_stockReducer = (state = initialState, action) => {
       return [action.watchlist];
     case ADDSTOCK_WATCHLIST:
       return [...newState, action.watchlist];
+    case DELETESTOCK_WATCHLIST:
+      return newState.filter((e) => action.watchlist.id !== e.id);
     default:
       return state;
   }

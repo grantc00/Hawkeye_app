@@ -10,6 +10,7 @@ import {
   getWatchlists,
 } from "../../store/watchlist";
 import { getWatchlistStocks } from "../../store/watchlist_stock";
+import RemoveStock from "../RemoveStock/RemoveStock";
 
 const List = (watchlist) => {
   const dispatch = useDispatch();
@@ -173,36 +174,15 @@ const List = (watchlist) => {
                 {allWatchListStocks
                   ?.filter((stock) => stock.watchlist_id == watchlist.id)
                   .map((s) => {
-                    return <li>{s.stock_ticker}</li>;
+                    return (
+                      <li>
+                        {s.stock_ticker}
+                        <RemoveStock {...s} />
+                      </li>
+                    );
                   })}
               </ul>
             </div>
-            {/* <li>
-              <a href="#">
-                <div className="my-watchlist-stocks">
-                  <div className="watchlist-stock-name">
-                    <span>TSLA</span>
-                  </div>
-                  <div className="mini-chart">📈</div>
-                  <div className="assest-stock-price">
-                    <span>$500</span>
-                  </div>
-                </div>
-              </a>
-            </li> */}
-            {/* <li>
-              <a href="#">
-                <div className="my-watchlist-stocks">
-                  <div className="watchlist-stock-name">
-                    <span>APPL</span>
-                  </div>
-                  <div className="mini-chart">📈</div>
-                  <div className="watchlist-stock-price">
-                    <span>$300</span>
-                  </div>
-                </div>
-              </a>
-            </li> */}
           </ul>
         </div>
       )}

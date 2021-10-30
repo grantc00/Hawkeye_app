@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../Watchlist/Watchlist.css";
 import { getWatchlists, postWatchlist } from "../../store/watchlist";
-import {getAllAssets} from '../../store/asset'
+import { getAllAssets } from "../../store/asset";
 import List from "../WatchlistList/WatchlistList";
 import Picker from "emoji-picker-react";
 
@@ -14,12 +14,11 @@ const WatchList = (watchlist) => {
   const [showPicker, setShowPicker] = useState(false);
   const [emoji, setEmoji] = useState(`\u{1f600}`);
   const [title, setTitle] = useState();
-  const assets = useSelector((state) => state.asset[0])
+  const assets = useSelector((state) => state.asset[0]);
 
   useEffect(() => {
-    dispatch(getAllAssets())
-  }, [dispatch])
-
+    dispatch(getAllAssets());
+  }, [dispatch]);
 
   const handleCreateWatchList = () => {
     let form = {
@@ -54,7 +53,6 @@ const WatchList = (watchlist) => {
             <div>{asset.ticker}</div>
             <div>{asset.shares} shares</div>
           </div>
-
         ))}
         {/* <ul>
           <li>
@@ -139,7 +137,9 @@ const WatchList = (watchlist) => {
                     value={emoji}
                   >
                     {emoji}
-                    {showPicker && <Picker onEmojiClick={onEmojiClick} className='dark'/>}
+                    {showPicker && (
+                      <Picker onEmojiClick={onEmojiClick} className="dark" />
+                    )}
                   </span>
                 </div>
                 <div>
@@ -186,4 +186,3 @@ const WatchList = (watchlist) => {
 };
 
 export default WatchList;
-
