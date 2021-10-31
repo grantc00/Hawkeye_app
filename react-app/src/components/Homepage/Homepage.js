@@ -65,7 +65,7 @@ const Homepage = () => {
         {/* <Slideshow /> */}
       </section>
 
-      <footer>Hawkeye created with ❤️ by Grant</footer>
+      <footer>Hawkeye created with  ❤️  by Grant</footer>
     </div>
   );
 };
