@@ -54,7 +54,7 @@ function SearchBar() {
   return (
     <form className='search-form-container'>
       <input
-        placeholder='Search for...'
+        placeholder='Search'
         onChange={handleInputChange}
         value={query}
       />

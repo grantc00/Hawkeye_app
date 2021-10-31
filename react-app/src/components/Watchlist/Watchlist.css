@@ -1,80 +1,102 @@
 .watch-list-container {
-    width: 276px;
-    padding: 24px;
-    border: 1px solid lightgrey;
-  }
+  width: 276px;
+  padding: 24px;
+  border: 1px solid lightgrey;
+  border-radius: 6px;
+}
 
-  .watch-list-container ul {
-    list-style: none;
-    padding: 0;
-  }
+.watch-list-container ul {
+  list-style: none;
+  padding: 0;
+}
 
-  .assest-stock,
-  .assest-stock-price {
-    width: 40px;
-  }
+.stocks-container,
+.create-my-watchlist,
+.watchlist-form-container {
+  border-bottom: 1px solid #d3d3d3;
+}
 
-  .assest-stocks-list {
-    padding: 5px 0;
-    display: flex;
-    justify-content: space-between;
-    height: 60px;
-    align-items: center;
-  }
+.stocks-container header {
+  padding: 8px;
+}
 
-  .create-my-watchlist {
-    display: flex;
-    justify-content: space-between;
-    height: 60px;
-    align-items: center;
-  }
+.assest-stocks-container div {
+  padding: 8px;
+}
 
-  .watchlist-form-header,
-  .watchlist-form-body {
-    padding: 5px;
-    display: flex;
-    justify-content: space-between;
-    height: 60px;
-    align-items: center;
-  }
+.assest-stocks-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
-  .my-watchlist-header {
-    display: flex;
-    justify-content: space-between;
-    height: 60px;
-    align-items: center;
-  }
+.assest-stock,
+.assest-stock-price {
+  width: 40px;
+}
 
-  .my-watchlist-header-left,
-  .my-watchlist-header-right {
-    display: flex;
-    justify-content: space-between;
-    position: relative;
-  }
+.assest-stocks-list {
+  padding: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  align-items: center;
+}
 
-  .my-watchlist-header-div {
-    padding-right: 30px;
-  }
+.create-my-watchlist {
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  align-items: center;
+}
 
-  .my-watchlist-stocks {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px;
-    height: 60px;
-    align-items: center;
-  }
+.watchlist-form-header,
+.watchlist-form-body {
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  align-items: center;
+}
 
-  .dropdown {
-    position: absolute;
-    top: 30px;
-    right: 10px;
-    width: 100px;
-    z-index: 2;
-    border: 1px solid rgba(0, 0, 0, 0.04);
-    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
-    background-color: grey;
-  }
-/* 
+.my-watchlist-header {
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  align-items: center;
+}
+
+.my-watchlist-header-left,
+.my-watchlist-header-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+}
+
+.my-watchlist-header-div {
+  padding-right: 30px;
+}
+
+.my-watchlist-stocks {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  height: 60px;
+  align-items: center;
+}
+
+.dropdown {
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  width: 100px;
+  z-index: 2;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
+  background-color: grey;
+}
+/*
   .dropdown-item {
     height: 60px;
     display: flex;
@@ -83,6 +105,7 @@
     text-align: center;
   } */
 
-  span:hover {
-    cursor: pointer;
-  }
+span:hover {
+  cursor: pointer;
+}
+

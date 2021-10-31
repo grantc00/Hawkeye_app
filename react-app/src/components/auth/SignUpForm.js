@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { ErrorBar } from "recharts";
 import { signUp } from "../../store/session";
+import './SignUpForm.css'
 
 const SignUpForm = () => {
   const [errors, setErrors] = useState([]);
@@ -62,7 +63,7 @@ const SignUpForm = () => {
   }
 
   return (
-    <form onSubmit={onSignUp}>
+    <form className='signup-form' onSubmit={onSignUp}>
       <div>
         {errors.map((error, ind) => (
           <div key={ind}>{error}</div>
@@ -118,7 +119,7 @@ const SignUpForm = () => {
           required={true}
         />
       </div>
-      <button type="submit">Sign Up</button>
+      <button className='signup-button' type="submit">Sign Up</button>
     </form>
   );
 };

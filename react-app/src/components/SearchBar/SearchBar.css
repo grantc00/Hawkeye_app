@@ -1,5 +1,12 @@
+.search-form-container{
+  width: 480px;
+  height: 36px;
+}
 .search-form-container input {
   position: relative;
+  width: 466px;
+  height: 34px;
+  border-radius: 6px;
 }
 
 .query-results-list ul {
@@ -8,11 +15,17 @@
   list-style: none;
   padding: 0;
   overflow: auto;
+  width: 460px;
   /* this will hide the scrollbar in mozilla based browsers */
   overflow: -moz-scrollbars-none;
   scrollbar-width: none;
   /* this will hide the scrollbar in internet explorers */
   -ms-overflow-style: none;
+  margin-top: 3px;
+  background-color: black;
+  margin-left: 2px;
+  border:white;
+  z-index: 1;
 }
 
 .query-results-list ul::-webkit-scrollbar {
@@ -22,8 +35,9 @@
 
 .query-results-list li {
   height: 30px;
-  background: #ccc;
-  border-bottom: black 1px solid;
+  background: black;
+  border-bottom: white .1px solid;
+  border-left:white;
 }
 
 .result-item {

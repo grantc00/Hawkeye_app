@@ -13,7 +13,7 @@ const NavBar = () => {
     <nav>
       <a href='/dashboard'>
         <img
-          src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Robinhood_logo.svg/640px-Robinhood_logo.svg.png'
+          src='https://i.imgur.com/zo40pvN.png'
           alt=''
         />
       </a>
@@ -41,7 +41,7 @@ const NavBar = () => {
     <nav>
       <a href='/dashboard'>
         <img
-          src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Robinhood_logo.svg/640px-Robinhood_logo.svg.png'
+          src='https://i.imgur.com/zo40pvN.png'
           alt=''
         />
       </a>

@@ -1,31 +1,32 @@
 #modal {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    /* background-position: rbga(0, 0, 0, 0.5); */
-  }
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  /* background-position: rbga(0, 0, 0, 0.5); */
+}
 
-  #modal-background {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-  }
+#modal-background {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
 
-  #modal-content {
-    width: 420px;
-    height: 172px;
-    position: absolute;
-    padding: 16px 24px;
-    box-shadow: 0px 1px 6px rgba(0,0,0,0.6);
-    /* background-color: #1E2124; this is what robinhood has */
-    background-color:cyan;
-    max-width: 100%;
-  }
+#modal-content {
+  width: 420px;
+  /* height: 172px; */
+  position: absolute;
+  padding: 16px 24px;
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.6);
+  /* background-color: #1E2124; this is what robinhood has */
+  background-color: #1e2124;
+  max-width: 100%;
+  border-radius: 8px;
+}

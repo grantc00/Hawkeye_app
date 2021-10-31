@@ -26,7 +26,6 @@
 }
 
 .edit-modal-emoji {
-  height: 40px;
   width: 40px;
   align-items: center;
 }
@@ -44,7 +43,7 @@
   justify-content: flex-end;
 }
 
-.dropdown-item .edit-modal-edit  {
+.dropdown-item .edit-modal-edit {
   height: 40px;
   display: flex;
   justify-content: center;
@@ -52,26 +51,36 @@
   text-align: center;
 }
 
-.dropdown-item .edit-modal-remove  {
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-  }
+.dropdown-item .edit-modal-remove {
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
 
 .edit-modal-footer button {
   width: 378px;
   height: 48px;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: #ba61f5;
 }
 
 .edit-modal-footer span {
   width: 378px;
   height: 48px;
 }
-/* 
+/*
 .emoji-picker {
   --num-columns: 6;
   --emoji-size: 3rem;
   --background: gray;
 } */
+
+.watchlist-stocks-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 8px;
+}

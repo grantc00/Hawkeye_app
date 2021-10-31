@@ -244,7 +244,7 @@ const StockData = () => {
             <Line
               type="monotone"
               dataKey="price"
-              stroke="green"
+              stroke="#ba61f5"
               strokeWidth={2}
               dot={false}
             />
@@ -346,24 +346,32 @@ const StockData = () => {
               </footer>
             </div>
           </form>
-          <span
+          {/* <span
             onClick={() => setShowModal(true)}
             className="add-watchlist-button"
           >
-            add to watchlist
-          </span>
+            Add to Watchlist
+          </span> */}
+
+          <div className="add-watchlist-container">
+            <button
+              onClick={() => setShowModal(true)}
+              className="add-watchlist-button"
+            >
+              Add to Watchlist
+            </button>
+          </div>
           {showModal && (
             <Modal onClick={() => setShowModal(false)}>
               <div className="addstock-modal-container">
                 <div className="addstock-modal-header">
                   <h1>Add to Your Lists</h1>
-                  <button onClick={() => setShowModal(false)}>close</button>
+                  <span onClick={() => setShowModal(false)}>Ｘ</span>
                 </div>
                 <form onSubmit={handleAddStockSubmit}>
                   <ul className="stock-list">
                     {watchlists?.map((watchlist) => (
                       <li>
-                        <label>{watchlist.title}</label>
                         <input
                           type="radio"
                           id={watchlist.id}
@@ -372,6 +380,9 @@ const StockData = () => {
                           checked={watchlist.id == selectWatchlistId}
                           onChange={handleChange}
                         />
+                        <label className="watchlist-title">
+                          {watchlist.title}
+                        </label>
                       </li>
                     ))}
                   </ul>
