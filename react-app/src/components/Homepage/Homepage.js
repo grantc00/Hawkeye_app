@@ -65,7 +65,9 @@ const Homepage = () => {
         {/* <Slideshow /> */}
       </section>
 
-      <footer>Hawkeye created with ❤️ by Grant</footer>
+      <div className='footer-container'>
+        <footer>Hawkeye created with ❤️ by Grant</footer>
+      </div>
     </div>
   );
 };
