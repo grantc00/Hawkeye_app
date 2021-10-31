@@ -101,9 +101,9 @@ const List = (watchlist) => {
                             <div className="edit-modal-container">
                               <div className="edit-modal-header">
                                 <h1>Edit List</h1>
-                                <button onClick={() => setShowModal(false)}>
-                                  close
-                                </button>
+                                <span onClick={() => setShowModal(false)}>
+                                  Ｘ
+                                </span>
                               </div>
                               <div className="emojititlesave-container">
                                 <div className="edit-modal-mid">
@@ -176,8 +176,12 @@ const List = (watchlist) => {
                   .map((s) => {
                     return (
                       <li>
-                        {s.stock_ticker}
-                        <RemoveStock {...s} />
+                        <div className="watchlist-stocks-container">
+                          <div>{s.stock_ticker}</div>
+                          <div>
+                            <RemoveStock {...s} />
+                          </div>
+                        </div>
                       </li>
                     );
                   })}

@@ -16,6 +16,8 @@
 .main_trade {
   width: 276px;
   border: 1px solid lightgrey;
+  border-radius: 6px;
+  padding: 10px;
 }
 
 .trade_stock_header,
@@ -35,18 +37,40 @@
   justify-content: center;
   padding: 10px;
 }
+.buy_order_btn {
+  background-color: #c3f53c;
+  border-radius: 6px;
+  padding: 10px;
+  width: 150px;
+}
+.buy_order_btn:hover {
+  background-color: #9bd300;
+}
 
 .trade_stock_footer {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.buying-power-label{
+.buying-power-label {
   padding: 10px;
 }
+.add-watchlist-container {
+  display: flex;
+  justify-content: center;
+}
 
-.add-watchlist-button{
+.add-watchlist-button {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  border-radius: 6px;
   padding: 10px;
+  width: 150px;
+  background-color: #ba61f5;
+}
+.add-watchlist-button:hover {
+  background-color: #a12bf0;
 }
 
 .trade_stock_input {
@@ -55,9 +79,52 @@
 }
 
 .sell_order_btn {
-  color: red;
+  background-color: red;
+  border-radius: 6px;
+  padding: 10px;
+  width: 150px;
+}
+.sell_order_btn:hover {
+  background-color: rgb(234, 0, 0);
 }
 
-.buy_order_btn {
-  color: green;
+.addstock-modal-header h1 {
+  margin: 0;
+}
+
+.addstock-modal-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stock-list {
+  padding: 0;
+  list-style: none;
+}
+
+.stock-list li {
+  margin: 16px 0;
+}
+
+.stock-list input {
+  cursor: pointer;
+}
+
+.save-button {
+  width: 378px;
+  height: 48px;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: #ba61f5;
+  /* padding: 8px 0; */
+}
+
+.watchlist-title {
+  padding-left: 8px;
+}
+
+p {
+  color: black;
 }

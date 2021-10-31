@@ -50,77 +50,15 @@ const WatchList = (watchlist) => {
       </div>
 
       <div className="assest-stocks-container">
-        {/* {assets?.map((asset) => (
-          <div>
-            <div>{asset.cost}</div>
-            <div>{asset.ticker}</div>
-            <div>{asset.shares} shares</div>
-          </div>
-        ))} */}
-
         {assets
           ?.filter((asset) => asset.user_id == userId)
           .map((item) => (
-            <div>
-              <div>{item.cost}</div>
+            <div className="assest-stocks-list">
               <div>{item.ticker}</div>
+              <div>${item.cost}</div>
               <div>{item.shares} shares</div>
             </div>
           ))}
-        {/* <ul>
-          <li>
-            <a href="#">
-              <div className="assest-stocks-list">
-                <div className="assest-stock">
-                  <span>TSLA</span>
-                </div>
-                <div className="mini-chart">📈</div>
-                <div className="assest-stock-price">
-                  <span>$500</span>
-                </div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <div className="assest-stocks-list">
-                <div className="assest-stock">
-                  <span>APPL</span>
-                </div>
-                <div className="mini-chart">📈</div>
-                <div className="assest-stock-price">
-                  <span>$400</span>
-                </div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <div className="assest-stocks-list">
-                <div className="assest-stock">
-                  <span>FB</span>
-                </div>
-                <div className="mini-chart">📈</div>
-                <div className="assest-stock-price">
-                  <span>$300</span>
-                </div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <div className="assest-stocks-list">
-                <div className="assest-stock">
-                  <span>SPY</span>
-                </div>
-                <div className="mini-chart">📈</div>
-                <div className="assest-stock-price">
-                  <span>$2000</span>
-                </div>
-              </div>
-            </a>
-          </li>
-        </ul> */}
       </div>
 
       <div className="my-watchlist-container">
@@ -168,7 +106,7 @@ const WatchList = (watchlist) => {
 
               <div className="watchlist-form-body">
                 <div>
-                  <button
+                  <span
                     onClick={() =>
                       toggleCreateList === false
                         ? setToggleCreateList(true)
@@ -176,10 +114,10 @@ const WatchList = (watchlist) => {
                     }
                   >
                     Cancel
-                  </button>
+                  </span>
                 </div>
                 <div>
-                  <button type="submit">Create List</button>
+                  <span type="submit">Create List</span>
                 </div>
               </div>
             </form>
