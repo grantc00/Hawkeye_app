@@ -97,5 +97,7 @@
 .footer-container {
   width: 100%;
   text-align: center;
-  padding: 24px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+
 }
